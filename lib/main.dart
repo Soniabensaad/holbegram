@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import './screens/login_screen.dart'; // Import the LoginScreen widget
-
+import './screens/login_screen.dart'; 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: primarySwatch, // Use the MaterialColor object
+        primarySwatch: primarySwatch, 
         colorScheme: ColorScheme.light(
           primary: Colors.white,
           onPrimary: Colors.black,
@@ -76,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: LoginScreen(
           emailController: TextEditingController(),
           passwordController: TextEditingController(),
-          passwordVisible: true, // Change _passwordVisible to passwordVisible
+          passwordVisible: true,
         ),
       ),
     );

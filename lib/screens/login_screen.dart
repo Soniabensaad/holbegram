@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 24),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey[200], // Change background color to grey
+                      color: Colors.grey[200], 
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Padding(
@@ -81,8 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         suffixIcon: IconButton(
                           alignment: Alignment.bottomLeft,
                           icon: _passwordVisible
-                              ? Icon(Icons.visibility, color: Colors.red) // Change color to red when visible
-                              : Icon(Icons.visibility_off, color: Colors.red), // Change color to red
+                              ? Icon(Icons.visibility, color: Colors.red) 
+                              : Icon(Icons.visibility_off, color: Colors.red), 
                           onPressed: () {
                             setState(() {
                               _passwordVisible = !_passwordVisible;
