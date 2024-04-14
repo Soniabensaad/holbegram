@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import './widgets/text_field.dart'; // Import the TextFieldInput widget
+import './screens/login_screen.dart'; // Import the LoginScreen widget
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,10 +23,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Create a MaterialColor from the primary color
+    MaterialColor primarySwatch = MaterialColor(
+      Colors.white.value,
+      <int, Color>{
+        50: Colors.white,
+        100: Colors.white,
+        200: Colors.white,
+        300: Colors.white,
+        400: Colors.white,
+        500: Colors.white,
+        600: Colors.white,
+        700: Colors.white,
+        800: Colors.white,
+        900: Colors.white,
+      },
+    );
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        
+        primarySwatch: primarySwatch, // Use the MaterialColor object
+        colorScheme: ColorScheme.light(
+          primary: Colors.white,
+          onPrimary: Colors.black,
+          surface: Colors.white,
+          onSurface: Colors.black,
+        ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -50,12 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: TextFieldInput(
-          controller: TextEditingController(),
-          isPassword: true, 
-          hintText: 'Password', 
-          keyboardType: TextInputType.emailAddress, 
-          suffixIcon: const Icon(Icons.visibility_off, color: Colors.red), 
+        child: LoginScreen(
+          emailController: TextEditingController(),
+          passwordController: TextEditingController(),
+          passwordVisible: true, // Change _passwordVisible to passwordVisible
         ),
       ),
     );

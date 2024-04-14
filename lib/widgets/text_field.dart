@@ -20,12 +20,12 @@ class TextFieldInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0), // Adjust the radius as needed
-        color: Colors.white, // External box color
+        borderRadius: BorderRadius.circular(8.0), 
+        color: Colors.white, 
       ),
       child: Theme(
         data: ThemeData(
-          primaryColor: Colors.deepPurple, // Internal box color
+          primaryColor: Colors.deepPurple, 
         ),
         child: TextField(
           keyboardType: keyboardType,
