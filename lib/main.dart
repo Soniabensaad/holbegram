@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import './screens/login_screen.dart'; 
+import './screens/login_screen.dart';
+import './screens/signup_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: primarySwatch, 
+        primarySwatch: primarySwatch,
         colorScheme: ColorScheme.light(
           primary: Colors.white,
           onPrimary: Colors.black,
@@ -50,7 +52,21 @@ class MyApp extends StatelessWidget {
           onSurface: Colors.black,
         ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),
+        '/login': (context) => LoginScreen(
+              emailController: TextEditingController(),
+              passwordController: TextEditingController(),
+              passwordVisible: true,
+            ),
+        '/signup': (context) => SignUp(
+              emailController: TextEditingController(),
+              usernameController: TextEditingController(),
+              passwordController: TextEditingController(),
+              passwordConfirmController: TextEditingController(),
+            ),
+      },
     );
   }
 }
@@ -72,10 +88,25 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: LoginScreen(
-          emailController: TextEditingController(),
-          passwordController: TextEditingController(),
-          passwordVisible: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to login page
+                Navigator.pushNamed(context, '/login');
+              },
+              child: Text('Log in'),
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to sign up page
+                Navigator.pushNamed(context, '/signup');
+              },
+              child: Text('Sign up'),
+            ),
+          ],
         ),
       ),
     );
