@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import './screens/login_screen.dart';
 import './screens/signup_screen.dart';
+import './screens/upload_image_screen.dart'; // Import the AddPicture screen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: FirebaseOptions(
-      apiKey: "AIzaSyCTcm9oWhr_-0OIilos0FYU68JFl88wBmo",
-      authDomain: "holbegram-3ea13.firebaseapp.com",
-      projectId: "holbegram-3ea13",
-      storageBucket: "holbegram-3ea13.appspot.com",
-      messagingSenderId: "917272556950",
-      appId: "1:917272556950:web:4932a454c75649e6c899b7",
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID",
     ),
   );
 
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Holbegram',
       theme: ThemeData(
         primarySwatch: primarySwatch,
         colorScheme: ColorScheme.light(
@@ -52,9 +53,9 @@ class MyApp extends StatelessWidget {
           onSurface: Colors.black,
         ),
       ),
-      initialRoute: '/',
+      initialRoute: '/', // Specify the initial route
       routes: {
-        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),
+        '/': (context) => MyHomePage(title: 'Holbegram'), // Change the title
         '/login': (context) => LoginScreen(
               emailController: TextEditingController(),
               passwordController: TextEditingController(),
@@ -65,6 +66,11 @@ class MyApp extends StatelessWidget {
               usernameController: TextEditingController(),
               passwordController: TextEditingController(),
               passwordConfirmController: TextEditingController(),
+            ),
+        '/add_picture': (context) => AddPicture( // Add the AddPicture screen route
+              email: '', // Pass necessary parameters if needed
+              password: '',
+              username: '',
             ),
       },
     );
@@ -105,6 +111,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, '/signup');
               },
               child: Text('Sign up'),
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to add picture page
+                Navigator.pushNamed(context, '/add_picture');
+              },
+              child: Text('Add Picture'), // Add a button to navigate to the AddPicture screen
             ),
           ],
         ),
