@@ -1,230 +1,218 @@
 import 'dart:typed_data';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../screens/login_screen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-class AuthMethods {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class AddPicture extends StatefulWidget {
+  final String email;
+  final String password;
+  final String username;
 
-  Future<String> login({required String email, required String password}) async {
-    if (email.isEmpty || password.isEmpty) {
-      return "Please fill all the fields";
-    }
+  const AddPicture({
+    required this.email,
+    required this.password,
+    required this.username,
+  });
 
-    try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      
-      return "success";
-    } catch (e) {
-     
-      return e.toString();
+  @override
+  _AddPictureState createState() => _AddPictureState();
+}
+
+class _AddPictureState extends State<AddPicture> {
+  Uint8List? _image;
+  final picker = ImagePicker();
+
+  Future<void> selectImageFromGallery() async {
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      final Uint8List imageData = await image.readAsBytes();
+      setState(() {
+        _image = Uint8List.fromList(imageData);
+      });
     }
   }
 
-  Future<String> signUpUser({
-    required String email,
-    required String password,
-    required String username,
-    Uint8List? file,
-  }) async {
-    if (email.isEmpty || password.isEmpty || username.isEmpty) {
-      return "Please fill all the fields";
-    }
-
-    try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      User? user = userCredential.user;
-      if (user != null) {
-       
-        await _firestore.collection("users").doc(user.uid).set({
-          'email': email,
-          'username': username,
-          
-        });
-      }
-
-      return "success";
-    } catch (e) {
-      return e.toString();
+  Future<void> selectImageFromCamera() async {
+    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    if (photo != null) {
+      final Uint8List cameraData = await photo.readAsBytes();
+      setState(() {
+        _image = Uint8List.fromList(cameraData);
+      });
     }
   }
-}
 
-class SignUp extends StatefulWidget {
-  final TextEditingController emailController;
-  final TextEditingController usernameController;
-  final TextEditingController passwordController;
-  final TextEditingController passwordConfirmController;
-  final bool passwordVisible;
+  // Function to sign up user
+  void signUpUser() {
+    // Implement your user signup logic here
+    // For example, you can use FirebaseAuth to sign up the user
+    // You can access the signup data using widget.email, widget.username, widget.password, etc.
+    // Show a Snackbar with a success message upon successful signup
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Sign up successful!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
 
-  const SignUp({
-    Key? key,
-    required this.emailController,
-    required this.usernameController,
-    required this.passwordController,
-    required this.passwordConfirmController,
-    this.passwordVisible = true,
-  }) : super(key: key);
-
-  @override
-  _SignUpState createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
-  late bool _passwordVisible;
-  final AuthMethods _authMethods = AuthMethods();
-
-  @override
-  void initState() {
-    super.initState();
-    _passwordVisible = widget.passwordVisible;
+  // Function to get user details
+  void getUserDetails() {
+    // Implement your logic to get user details here
+    // For example, you can use FirebaseAuth to get the current user's details
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Retrieve user details
+      String email = user.email ?? '';
+      String username = widget.username; // Assuming username is passed from the previous screen
+      // You can further process the user details as needed
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final passwordVisibleIcons = IconButton(
-      alignment: Alignment.bottomLeft,
-      color: const Color.fromARGB(218, 226, 37, 24),
-      onPressed: () => setState(() {
-        _passwordVisible = !_passwordVisible;
-      }),
-      icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off),
-    );
-
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          const Text(
-            'Holbegram',
-            style: TextStyle(
-              fontFamily: 'Billabong',
-              fontSize: 50,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 28),
+            const Text(
+              'Holbegram',
+              style: TextStyle(
+                fontFamily: 'Billabong',
+                fontSize: 50,
+              ),
             ),
-          ),
-          Image.asset(
-            'assets/images/logo.webp',
-            width: 80,
-            height: 60,
-          ),
-          const SizedBox(height: 24),
-          const Text(
-            'Sign up to see photos and videos from your friends.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 18,
+            Image.asset(
+              'assets/images/logo.webp',
+              width: 80,
+              height: 60,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 24),
-                TextField(
-                  controller: widget.emailController,
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 24),
-                TextField(
-                  controller: widget.usernameController,
-                  decoration: InputDecoration(
-                    hintText: 'Username',
-                  ),
-                  keyboardType: TextInputType.text,
-                ),
-                const SizedBox(height: 24),
-                TextField(
-                  controller: widget.passwordController,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    suffixIcon: passwordVisibleIcons,
-                  ),
-                  obscureText: !_passwordVisible,
-                ),
-                const SizedBox(height: 24),
-                TextField(
-                  controller: widget.passwordConfirmController,
-                  decoration: InputDecoration(
-                    hintText: 'Confirm Password',
-                    suffixIcon: passwordVisibleIcons,
-                  ),
-                  obscureText: !_passwordVisible,
-                ),
-                const SizedBox(height: 28),
-                SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      String signUpResult = await _authMethods.signUpUser(
-                        email: widget.emailController.text.trim(),
-                        password: widget.passwordController.text,
-                        username: widget.usernameController.text.trim(),
-                        file: null, 
-                      );
-
-                      if (signUpResult == "success") {
-                        // Show success message or navigate to another screen
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Sign up successful!'),
-                          ),
-                        );
-                        // Navigate to home screen or another screen
-                      } else {
-                        // Show error message
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(signUpResult),
-                          ),
-                        );
-                      }
-                    },
-                    child: const Text('Sign up'),
-                  ),
-                ),
-                const SizedBox(height: 24),
-              ],
-            ),
-          ),
-          const Divider(
-            thickness: 2,
-            height: 2,
-          ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('Have an account?'),
-              TextButton(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => LoginScreen(
-                      emailController: TextEditingController(),
-                      passwordController: TextEditingController(),
+            const SizedBox(height: 28),
+            Padding(
+              padding: const EdgeInsets.only(left: 40, right: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Hello, ${widget.username} Welcome to\nHolbegram.',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(height: 6),
+                  const Text(
+                    'Choose an image from your gallery or take a new one.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 28),
+            _image != null
+                ? Image.memory(
+                    _image!,
+                    width: 200,
+                    fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    'assets/images/Sample_User_Icon.png',
+                    width: 280,
+                    fit: BoxFit.cover,
+                  ),
+            Padding(
+              padding: const EdgeInsets.only(right: 80, left: 80),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.photo_library),
+                    color: const Color.fromARGB(218, 226, 37, 24),
+                    iconSize: 50,
+                    onPressed: () => selectImageFromGallery(),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.camera_alt),
+                    color: const Color.fromARGB(218, 226, 37, 24),
+                    iconSize: 50,
+                    onPressed: () => selectImageFromCamera(),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 38),
+            SizedBox(
+              height: 46,
+              width: 120,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromARGB(218, 226, 37, 24)),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                  ),
                 ),
+                onPressed: () async {
+                  // Call getUserDetails method to retrieve user details
+                  getUserDetails();
+                  // Call signUpUser method
+                  signUpUser();
+                  // Upload image to Firebase Storage
+                  if (_image != null) {
+                    String email = widget.email;
+                    String username = widget.username;
+                    String password = widget.password;
+                    Uint8List file = _image!;
+                    StorageMethods storageMethods = StorageMethods();
+                    String downloadUrl = await storageMethods.uploadImageToStorage(
+                      false,
+                      'profile_images', 
+                      file,
+                    );
+                    
+                  }
+                },
                 child: const Text(
-                  'Log in',
-                  style: TextStyle(color: Color.fromARGB(218, 223, 45, 45)),
+                  'Next',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                  ),
                 ),
               ),
-            ],
-          )
-        ],
+            ),
+          ],
+        ),
       ),
     );
+  }
+}
+
+class StorageMethods {
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<String> uploadImageToStorage(
+    bool isPost,
+    String childName,
+    Uint8List file,
+  ) async {
+    Reference ref = _storage.ref().child(childName).child(_auth.currentUser!.uid);
+    if (isPost) {
+      String id = const Uuid().v1();
+      ref = ref.child(id);
+    }
+    UploadTask uploadTask = ref.putData(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 }

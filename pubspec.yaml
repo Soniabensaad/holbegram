@@ -42,6 +42,7 @@ dependencies:
   firebase_core: ^2.29.0
   uuid: ^4.4.0
   image_picker: ^1.1.0
+  bottom_navy_bar: ^6.0.0
 
 
 dev_dependencies:
