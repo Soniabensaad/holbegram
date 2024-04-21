@@ -52,7 +52,7 @@ class _SignUpState extends State<SignUp> {
             height: 48,
             child: ElevatedButton(
               onPressed: () {
-                // Navigate to AddPicture page and pass signup data
+         
                 Navigator.push(
                   context,
                   MaterialPageRoute(

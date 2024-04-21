@@ -16,13 +16,12 @@ class Feed extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              // Add search functionality here
+              
             },
           ),
           IconButton(
             icon: Icon(Icons.notifications),
             onPressed: () {
-              // Add notification functionality here
             },
           ),
         ],

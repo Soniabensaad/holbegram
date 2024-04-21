@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class Search extends StatelessWidget {
-  const Search({super.key});
+  const Search({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
 
     return Scaffold(
       appBar: AppBar(
@@ -39,10 +37,8 @@ class Search extends StatelessWidget {
         elevation: 0,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        // この部分は、Firestoreからデータを取得する実際のクエリに置き換えてください
         stream: firestore.collection('posts').snapshots(),
         builder: (context, snapshot) {
-          // ストリームの接続状態
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -52,20 +48,22 @@ class Search extends StatelessWidget {
 
           var documents = snapshot.data!.docs;
 
-           return StaggeredGrid.count( // 異なるサイズのタイルを持つグリッドを作成
+          return StaggeredGridView.countBuilder(
             crossAxisCount: 4,
             mainAxisSpacing: 4,
             crossAxisSpacing: 4,
-            children: List.generate(documents.length, (int index) {
-              return StaggeredGridTile.count( // グリッドのアイテム（タイル）
+            itemCount: documents.length,
+            itemBuilder: (BuildContext context, int index) {
+              return StaggeredTile.count(
                 crossAxisCellCount: 2,
                 mainAxisCellCount: index.isEven ? 2 : 3,
                 child: Image.network(
-                  documents[index]['postUrl'], 
+                  documents[index]['postUrl'],
                   fit: BoxFit.cover,
                 ),
               );
-            }),
+            },
+            staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
           );
         },
       ),

@@ -4,14 +4,13 @@ import '../models/user.dart';
 import '../methods/auth_methods.dart';
 
 class UserProvider with ChangeNotifier {
-  User? _user; // Use 'User' instead of 'Users'
-  final AuthMethod _authMethod = AuthMethod(); // Correct spelling to '_authMethod'
-
-  User? get user => _user;
+  User? _user; 
+  final AuthMethod _authMethod = AuthMethod(); 
+  Users? get user => _user;
 
   Future<void> refreshUser() async {
     try {
-      User userDetails = await _authMethod.getUserDetails(); // Use 'User' instead of 'Users'
+      Users userDetails = await _authMethod.getUserDetails(); 
       _user = userDetails;
       notifyListeners();
     } catch (e) {

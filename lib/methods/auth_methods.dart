@@ -44,12 +44,9 @@ class _AddPictureState extends State<AddPicture> {
     }
   }
 
-  // Function to sign up user
+  
   void signUpUser() {
-    // Implement your user signup logic here
-    // For example, you can use FirebaseAuth to sign up the user
-    // You can access the signup data using widget.email, widget.username, widget.password, etc.
-    // Show a Snackbar with a success message upon successful signup
+   
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Sign up successful!'),
@@ -60,14 +57,11 @@ class _AddPictureState extends State<AddPicture> {
 
   // Function to get user details
   void getUserDetails() {
-    // Implement your logic to get user details here
-    // For example, you can use FirebaseAuth to get the current user's details
+    
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // Retrieve user details
       String email = user.email ?? '';
-      String username = widget.username; // Assuming username is passed from the previous screen
-      // You can further process the user details as needed
+      String username = widget.username; /
     }
   }
 
@@ -161,11 +155,11 @@ class _AddPictureState extends State<AddPicture> {
                   ),
                 ),
                 onPressed: () async {
-                  // Call getUserDetails method to retrieve user details
+                  
                   getUserDetails();
-                  // Call signUpUser method
+                  
                   signUpUser();
-                  // Upload image to Firebase Storage
+                 
                   if (_image != null) {
                     String email = widget.email;
                     String username = widget.username;
