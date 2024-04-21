@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/text_field.dart';
 import 'login_screen.dart';
-import 'upload_image_screen.dart'; // Import AddPicture screen
+import 'upload_image_screen.dart';
 
 class SignUp extends StatefulWidget {
   final TextEditingController emailController;
@@ -46,7 +46,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          // Your UI code
+    
           SizedBox(
             width: double.infinity,
             height: 48,
@@ -78,7 +78,7 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
           const SizedBox(height: 24),
-          // Your UI code
+          
         ],
       ),
     );

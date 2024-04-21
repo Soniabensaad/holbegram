@@ -3,6 +3,18 @@ import 'package:firebase_core/firebase_core.dart';
 import './screens/login_screen.dart';
 import './screens/signup_screen.dart';
 import './screens/upload_image_screen.dart'; 
+import 'package:flutter/widgets.dart';
+import './widgets/text_field.dart';
+import './screens/login_screen.dart';
+import './screens/pages/feed.dart';
+import './screens/signup_screen.dart';
+import './screens/upload_image_screen.dart';
+import 'screens/home.dart';
+import 'providers/user_provider.dart';
+import 'screens/pages/profile_screen.dart';
+import 'screens/pages/add_image.dart';
+import 'package:provider/provider.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

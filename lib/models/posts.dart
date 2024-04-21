@@ -1,58 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User {
+class Post {
+  String caption;
   String uid;
-  String email;
   String username;
-  String bio;
-  String photoUrl;
-  List<dynamic> followers;
-  List<dynamic> following;
-  List<dynamic> posts;
-  List<dynamic> saved;
-  String searchKey;
+  List<dynamic> likes;
+  String postId;
+  DateTime datePublished;
+  String postUrl;
+  String profImage;
 
-  User(
-    this.uid,
-    this.email,
-    this.username,
-    this.bio,
-    this.photoUrl,
-    this.followers,
-    this.following,
-    this.posts,
-    this.saved,
-    this.searchKey,
-  );
+  Post({
+    required this.caption,
+    required this.uid,
+    required this.username,
+    required this.likes,
+    required this.postId,
+    required this.datePublished,
+    required this.postUrl,
+    required this.profImage,
+  });
 
-  static User fromSnap(DocumentSnapshot snap) {
-    var data = snap.data() as Map<String, dynamic>;
-    return User(
-      data['uid'] ?? '',
-      data['email'] ?? '',
-      data['username'] ?? '',
-      data['bio'] ?? '',
-      data['photoUrl'] ?? '',
-      List<dynamic>.from(data['followers'] ?? []),
-      List<dynamic>.from(data['following'] ?? []),
-      List<dynamic>.from(data['posts'] ?? []),
-      List<dynamic>.from(data['saved'] ?? []),
-      data['searchKey'] ?? '',
+  static Post fromJson(Map<String, dynamic> json) {
+    return Post(
+      caption: json['caption'] ?? '',
+      uid: json['uid'] ?? '',
+      username: json['username'] ?? '',
+      likes: json['likes'] ?? [],
+      postId: json['postId'] ?? '',
+      datePublished: json['datePublished'].toDate(),
+      postUrl: json['postUrl'] ?? '',
+      profImage: json['profImage'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'caption': caption,
       'uid': uid,
-      'email': email,
       'username': username,
-      'bio': bio,
-      'photoUrl': photoUrl,
-      'followers': followers,
-      'following': following,
-      'posts': posts,
-      'saved': saved,
-      'searchKey': searchKey,
+      'likes': likes,
+      'postId': postId,
+      'datePublished': datePublished,
+      'postUrl': postUrl,
+      'profImage': profImage,
     };
   }
 }

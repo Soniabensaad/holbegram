@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import '../methods/auth_methods.dart';
+import 'package:provider/provider.dart';
 import '../models/user.dart';
+import '../methods/auth_methods.dart';
 
 class UserProvider with ChangeNotifier {
-  late User _user;
-  final AuthMethode _authMethod = AuthMethode();
+  User? _user; // Use 'User' instead of 'Users'
+  final AuthMethod _authMethod = AuthMethod(); // Correct spelling to '_authMethod'
 
-  User get user => _user;
+  User? get user => _user;
 
   Future<void> refreshUser() async {
     try {
-      User user = await _authMethod.getUserDetails();
-      _user = user;
+      User userDetails = await _authMethod.getUserDetails(); // Use 'User' instead of 'Users'
+      _user = userDetails;
       notifyListeners();
     } catch (e) {
       print("Error refreshing user: $e");
