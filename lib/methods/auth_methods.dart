@@ -44,9 +44,7 @@ class _AddPictureState extends State<AddPicture> {
     }
   }
 
-  
   void signUpUser() {
-   
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Sign up successful!'),
@@ -55,13 +53,11 @@ class _AddPictureState extends State<AddPicture> {
     );
   }
 
-  // Function to get user details
   void getUserDetails() {
-    
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       String email = user.email ?? '';
-      String username = widget.username; /
+      String username = widget.username;
     }
   }
 
@@ -155,11 +151,8 @@ class _AddPictureState extends State<AddPicture> {
                   ),
                 ),
                 onPressed: () async {
-                  
                   getUserDetails();
-                  
                   signUpUser();
-                 
                   if (_image != null) {
                     String email = widget.email;
                     String username = widget.username;
@@ -171,7 +164,6 @@ class _AddPictureState extends State<AddPicture> {
                       'profile_images', 
                       file,
                     );
-                    
                   }
                 },
                 child: const Text(

@@ -18,7 +18,7 @@ class AddImageState extends State<AddImage> {
   Uint8List? _image;
   final picker = ImagePicker();
   final _postStorage = PostStorage();
-  final authMethod = AuthMethod();
+  final authMethod = AuthMethode();
   TextEditingController captionController = TextEditingController();
 
   @override
@@ -56,7 +56,7 @@ class AddImageState extends State<AddImage> {
       return;
     }
     try {
-      User userData = await authMethod.getUserDetails();
+      Users userData = await authMethod.getUserDetails();
       String caption = captionController.text; 
       String uid = userData.uid;
       String username = userData.username;
