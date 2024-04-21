@@ -44,12 +44,9 @@ class _AddPictureState extends State<AddPicture> {
     }
   }
 
-  // Function to sign up user
+ 
   void signUpUser() {
-    // Implement your user signup logic here
-    // For example, you can use FirebaseAuth to sign up the user
-    // You can access the signup data using widget.email, widget.username, widget.password, etc.
-    // Show a Snackbar with a success message upon successful signup
+    
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Sign up successful!'),

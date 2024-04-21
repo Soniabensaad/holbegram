@@ -79,8 +79,8 @@ class MyApp extends StatelessWidget {
               passwordController: TextEditingController(),
               passwordConfirmController: TextEditingController(),
             ),
-        '/add_picture': (context) => AddPicture( // Add the AddPicture screen route
-              email: '', // Pass necessary parameters if needed
+        '/add_picture': (context) => AddPicture( 
+              email: '', 
               password: '',
               username: '',
             ),
@@ -119,18 +119,17 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                // Navigate to sign up page
+                
                 Navigator.pushNamed(context, '/signup');
               },
               child: Text('Sign up'),
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {
-                // Navigate to add picture page
+              onPressed: () { 
                 Navigator.pushNamed(context, '/add_picture');
               },
-              child: Text('Add Picture'), // Add a button to navigate to the AddPicture screen
+              child: Text('Add Picture'), 
             ),
           ],
         ),

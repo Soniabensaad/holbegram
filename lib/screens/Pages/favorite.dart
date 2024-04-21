@@ -19,7 +19,7 @@ class Favorite extends StatelessWidget {
             fontSize: 40,
             fontFamily: 'Billabong',
           ),
-        ), // ページタイトル
+        ), 
         centerTitle: false, 
       ),
       body: user == null
