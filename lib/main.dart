@@ -65,9 +65,9 @@ class MyApp extends StatelessWidget {
           onSurface: Colors.black,
         ),
       ),
-      initialRoute: '/', // Specify the initial route
+      initialRoute: '/', 
       routes: {
-        '/': (context) => MyHomePage(title: 'Holbegram'), // Change the title
+        '/': (context) => MyHomePage(title: 'Holbegram'), 
         '/login': (context) => LoginScreen(
               emailController: TextEditingController(),
               passwordController: TextEditingController(),
